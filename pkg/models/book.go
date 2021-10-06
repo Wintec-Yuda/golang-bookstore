@@ -2,26 +2,25 @@ package models
 
 import (
 	"github.com/Wintec-Yuda/golang-bookstore.git/pkg/config"
-	"github.com/Wintec-Yuda/golang-bookstore/pkg/config"
 	"github.com/jinzhu/gorm"
 )
 
 var db *gorm.DB
 
-type Book struct{
-	gorm.model
-	Name string `gorm=""json="name"`
-	Author string `json="author"`
+type Book struct {
+	gorm.Model
+	Name        string `gorm=""json="name"`
+	Author      string `json="author"`
 	Publication string `json="publication"`
 }
 
-func init(){
+func init() {
 	config.Connect()
 	db = config.GetDB()
 	db.AutoMigrate(&Book{})
 }
 
-func (b *Book) CreateBook() *Book{
+func (b *Book) CreateBook() *Book {
 	db.NewRecord(b)
 	db.Create(&b)
 	return b

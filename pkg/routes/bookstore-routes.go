@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"github.com/Wintec-Yuda/golang-bookstore/pkg/controllers"
+	"github.com/Wintec-Yuda/golang-bookstore.git/pkg/controllers"
 	"github.com/gorilla/mux"
 )
 

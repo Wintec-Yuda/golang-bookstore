@@ -8,14 +8,12 @@ import (
 
 	"github.com/Wintec-Yuda/golang-bookstore.git/pkg/models"
 	"github.com/Wintec-Yuda/golang-bookstore.git/pkg/utils"
-	"github.com/Wintec-Yuda/golang-bookstore/pkg/models"
-	"github.com/Wintec-Yuda/golang-bookstore/pkg/utils"
 	"github.com/gorilla/mux"
 )
 
 var NewBook models.Book
 
-func GetBook(w http.ResponseWriter, r *http.Request)  {
+func GetBook(w http.ResponseWriter, r *http.Request) {
 	newBooks := models.GetAllBooks()
 	res, _ := json.Marshal(newBooks)
 	w.Header().Set("Content-Type", "application/json")
@@ -23,11 +21,11 @@ func GetBook(w http.ResponseWriter, r *http.Request)  {
 	w.Write(res)
 }
 
-func GetBoookById(w http.ResponseWriter, r *http.Request)  {
+func GetBookById(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	bookId := vars["bookId"]
 	ID, err := strconv.ParseInt(bookId, 0, 0)
-	if err != nil{
+	if err != nil {
 		fmt.Println("Error while parsing")
 	}
 	bookDetails, _ := models.GetBookById(ID)
@@ -37,7 +35,7 @@ func GetBoookById(w http.ResponseWriter, r *http.Request)  {
 	w.Write(res)
 }
 
-func CreateBook(w http.ResponseWriter, r *http.Request){
+func CreateBook(w http.ResponseWriter, r *http.Request) {
 	CreateBook := &models.Book{}
 	utils.ParseBody(r, CreateBook)
 	b := CreateBook.CreateBook()
@@ -46,11 +44,11 @@ func CreateBook(w http.ResponseWriter, r *http.Request){
 	w.Write(res)
 }
 
-func DeleteBook(w http.ResponseWriter, r *http.Request)  {
+func DeleteBook(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	bookId := vars["bookId"]
 	ID, err := strconv.ParseInt(bookId, 0, 0)
-	if err!=nil{
+	if err != nil {
 		fmt.Println("Error while parsing")
 	}
 	book := models.DeleteBook(ID)
@@ -60,23 +58,23 @@ func DeleteBook(w http.ResponseWriter, r *http.Request)  {
 	w.Write(res)
 }
 
-func UpdateBook(w http.ResponseWriter, r *http.Request){
+func UpdateBook(w http.ResponseWriter, r *http.Request) {
 	var updateBook = &models.Book{}
 	utils.ParseBody(r, updateBook)
 	vars := mux.Vars(r)
 	bookId := vars["bookId"]
 	ID, err := strconv.ParseInt(bookId, 0, 0)
-	if err!=nil{
+	if err != nil {
 		fmt.Println("Error while parsing")
 	}
 	booksDetails, db := models.GetBookById(ID)
-	if updateBook.Name!=""{
+	if updateBook.Name != "" {
 		booksDetails.Name = updateBook.Name
 	}
-	if updateBook.Author!=""{
+	if updateBook.Author != "" {
 		booksDetails.Author = updateBook.Author
 	}
-	if updateBook.Publication!=""{
+	if updateBook.Publication != "" {
 		booksDetails.Publication = updateBook.Publication
 	}
 	db.Save(&booksDetails)
